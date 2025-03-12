@@ -28,6 +28,10 @@ var (
 		Url:    "/worker/settle/upload",
 		Method: http.MethodPost,
 	}
+	MchatTransactionRefund = utils.API{
+		Url:    "/worker/transaction/refund",
+		Method: http.MethodPost,
+	}
 )
 
 func (u *mongolchat) httpRequestMongolChat(body interface{}, api utils.API) (response []byte, err error) {
