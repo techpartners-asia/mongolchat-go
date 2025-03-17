@@ -70,4 +70,13 @@ type (
 		WhoPaid   string `json:"who_paid"`    // if status is paid this field filled with who_paid
 		UserRefID string `json:"user_ref_id"` // if status is paid this field filled with user_ref_id
 	}
+	MchatTransactionRefundRequest struct {
+		ID     string  `json:"id"`
+		Amount float64 `json:"amount"`
+		Reason string  `json:"reason"`
+	}
+	MchatTransactionRefundResponse struct {
+		Code    int    `json:"code"`
+		Message string `json:"message"`
+	}
 )

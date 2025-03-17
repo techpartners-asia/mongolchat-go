@@ -15,6 +15,7 @@ type mongolchat struct {
 type MongolChat interface {
 	GenerateQR(input MchatOnlineQrGenerateRequest) (MchatOnlineQrGenerateResponse, error)
 	CheckQR(qr string) (MchatOnlineQrCheckResponse, error)
+	RefundTransaction(input MchatTransactionRefundRequest) (MchatTransactionRefundResponse, error)
 }
 
 func New(endpoint, apikey, workerkey, appsecret, branchno string) MongolChat {
@@ -48,6 +49,21 @@ func (s mongolchat) CheckQR(qr string) (response MchatOnlineQrCheckResponse, err
 		return
 	}
 	json.Unmarshal(res, &response)
+	if response.Code != 1000 {
+		err = errors.New(response.Message)
+	}
+	return
+}
+
+func (s mongolchat) RefundTransaction(input MchatTransactionRefundRequest) (response MchatTransactionRefundResponse, err error) {
+	res, err := s.httpRequestMongolChat(input, MchatTransactionRefund)
+	if err != nil {
+		return
+	}
+	err = json.Unmarshal(res, &response)
+	if err != nil {
+		return
+	}
 	if response.Code != 1000 {
 		err = errors.New(response.Message)
 	}
